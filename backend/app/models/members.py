@@ -10,7 +10,8 @@ def get_datetime_utc() -> datetime:
 class Members(SQLModel, table=True):
     __tablename__ = "members"
     Member_id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    Name: str = Field(max_length=255)
+    first_name: str = Field(max_length=255)
+    last_name: str = Field(max_length=255)
     Email: str = Field(max_length=255, unique=True)
     Phone_number: str = Field(max_length=20)
     Address: str = Field(max_length=255)
@@ -21,6 +22,7 @@ class Members(SQLModel, table=True):
         sa_type=DateTime(timezone=True),  # type: ignore
     )
     Updated_date: datetime = True
+    is_deleted: bool = Field(default=False)
 
 class CreateMember(Members):
     __tablename__ = "memberships"

@@ -1,7 +1,9 @@
+from app.core.db import init_db, engine
 import sentry_sdk
 from fastapi import FastAPI
 from fastapi.routing import APIRoute
 from starlette.middleware.cors import CORSMiddleware
+from sqlmodel import Session
 
 from app.api.main import api_router
 from app.core.config import settings
@@ -19,6 +21,12 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
     generate_unique_id_function=custom_generate_unique_id,
 )
+
+# Initialize database on startup
+@app.on_event("startup")
+def on_startup() -> None:
+    with Session(engine) as session:
+        init_db(session)
 
 # Set all CORS enabled origins
 if settings.all_cors_origins:

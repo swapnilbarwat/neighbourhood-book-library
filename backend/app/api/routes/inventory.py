@@ -22,13 +22,7 @@ def add_book(session: SessionDep, book_in: Books) -> Any:
     """
     create new book.
     """
-    book = books.get_book_by_title(session=session, title=book_in.Title)
-    if book:
-        raise HTTPException(
-            status_code=400,
-            detail="The book with this title already exists in the system.",
-        
-    )
+    # book = books.get_book_by_title(session=session, title=book_in.Title)
     book = books.create_book(session=session, book_create=book_in)
     return book
 

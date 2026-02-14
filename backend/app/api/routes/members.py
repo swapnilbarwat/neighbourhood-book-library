@@ -2,7 +2,7 @@ import uuid
 from typing import Any
 
 from app.models.crud import members
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException
 from sqlmodel import col, delete, func, select
 
 from app.models.members import (
